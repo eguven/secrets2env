@@ -1,0 +1,6 @@
+.git
+build
+dist
+*egg-info
+.tox
+.pytest_cache
