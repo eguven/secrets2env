@@ -9,8 +9,8 @@ import yaml
 class SecretsManagerClient(object):
     """Facilitates retrieving and decoding AWS Secrets, currently onlysupports `SecretString`."""
     def __init__(self):
+        boto3.setup_default_session()
         self.client = boto3.client('secretsmanager')
-        # self.client.setup_default_session()
 
     def _get_secret(self, secret_name):
         return self.client.get_secret_value(SecretId=secret_name)
