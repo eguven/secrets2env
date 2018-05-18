@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='secrets2env',
-    version='0.1.2',
+    version='0.1.3',
     description='Command-line tool for generating environment variables from AWS Secrets',
     long_description=open('README.md').read(),
     # setuptools>=38.6.0 - https://packaging.python.org/specifications/core-metadata/#description-content-type

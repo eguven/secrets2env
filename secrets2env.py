@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import argparse
 import json
 import re
 
@@ -28,8 +29,8 @@ class EnvironmentGenerator(object):
     # IEEE Std 1003.1-2001 - http://pubs.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap08.html
     _name_regex = re.compile(r'^[_A-Z]{1}[_A-Z]*$')
 
-    def __init__(self):
-        self.definition_file = './aws-secrets.yml'
+    def __init__(self, path_to_definition='./aws-secrets.yml'):
+        self.definition_file = path_to_definition
 
         with open(self.definition_file, 'r') as f:
             self.definition = yaml.load(f.read())
@@ -60,7 +61,13 @@ class EnvironmentGenerator(object):
 
 
 def run():
-    env_generator = EnvironmentGenerator()
+    parser = argparse.ArgumentParser(description='Generate environment variables from AWS Secrets')
+    parser.add_argument(
+        '--definition', type=str, default='./aws-secrets.yml', metavar='PATH', help='Path to definition YAML',
+    )
+    args = parser.parse_args()
+
+    env_generator = EnvironmentGenerator(path_to_definition=args.definition)
     smc = SecretsManagerClient()
     secrets = {name: smc.get_secret_value(name) for name in env_generator.required_secrets}
     print(env_generator.generate_environment(secrets))
