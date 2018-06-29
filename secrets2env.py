@@ -33,7 +33,7 @@ class EnvironmentGenerator(object):
         self.definition_file = path_to_definition
 
         with open(self.definition_file, 'r') as f:
-            self.definition = yaml.load(f.read())
+            self.definition = yaml.safe_load(f.read())
 
         # make sure environment variable names are valid
         for definition in self.definition:
