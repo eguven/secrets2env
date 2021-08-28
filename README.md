@@ -23,6 +23,8 @@ using `.format()` and keyword arguments.
 - secret: production/postgresql
   name: PSQL_URI
   value: "postgresql://{username}:{password}@postgresql:5432/{dbname}"
+- secret: production/apitoken
+  name: API_TOKEN
 ```
 
 ## Usage

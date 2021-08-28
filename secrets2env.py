@@ -52,9 +52,12 @@ class EnvironmentGenerator(object):
         for definition in self.definition:
             secret = secrets[definition['secret']]
             name = definition['name']
-            value = definition['value'].format(**secret)
+            try:
+                value = definition['value'].format(**secret)
+            except KeyError:
+                value = secret
 
-            line = 'export {}=\'{}\''.format(name, value)
+            line = f'export {name}={value}'
             lines.append(line)
 
         return '\n'.join(lines)
